@@ -35,7 +35,8 @@ public class ModuleManager {
             new TickTaskExecutor(),
             new WaystoneSync(),
             new WorldBorder(),
-            new WorldTools()
+            new WorldTools(),
+            new ElytraTrailFollower()
         ).forEach(ModuleManager::addModule);
     }
 
