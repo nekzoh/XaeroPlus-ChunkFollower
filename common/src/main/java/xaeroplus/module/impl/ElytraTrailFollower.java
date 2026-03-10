@@ -109,7 +109,10 @@ public class ElytraTrailFollower extends Module {
                 if (isOldChunk(chunkX, chunkZ, dim)) {
                     double distSq = (double) x * x + (double) z * z;
                     double dot = x * lX + z * lZ;
-                    if (dot > 0 && distSq > tempMaxDistSq) {
+                    
+                    double requiredDot = Math.sqrt(distSq) * 0.5;
+                    
+                    if (dot > requiredDot && distSq > tempMaxDistSq) {
                         tempMaxDistSq = distSq;
                         tempBestX = chunkX;
                         tempBestZ = chunkZ;
