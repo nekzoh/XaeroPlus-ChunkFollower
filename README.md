@@ -71,6 +71,11 @@ You can find download links to Xaero's mods here:
 * [Baritone](https://github.com/cabaletta/baritone) integration
   * Baritone Goals synced as temporary waypoints
   * [Point and Click Travel](https://youtu.be/gbguyfXLgi0)
+  * **Elytra Trail Follower**: Automatic pathing through loaded and unloaded chunks using Baritone's ElytraFly. Remembers your last direction if you look away or if the trail turns. Respects `#stop` to pause movement. Configure the search radius and update ticks in the `[XP] Other` settings menu.
+<p align="center">
+  <img src="elytra_menu.png" alt="Elytra Trail Follower Settings" width="600"/>
+</p>
+
 * [Waystones](https://legacy.curseforge.com/minecraft/mc-mods/waystones) and [Fabric Waystones](https://legacy.curseforge.com/minecraft/mc-mods/fabric-waystones) integration
   * Syncs Waystones as temporary waypoints
 * [WorldTools](https://modrinth.com/mod/worldtools/) World Downloader integration
