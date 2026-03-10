@@ -619,6 +619,30 @@ public final class Settings extends SettingRegistry {
             false,
             () -> ModuleManager.getModule(LiquidNewChunks.class).isEnabled()),
         SettingLocation.CHUNK_HIGHLIGHTS);
+    public final BooleanSetting elytraTrailFollowerEnabledSetting = register(
+        BooleanSetting.create(
+            "Elytra Trail Follower",
+            "xaeroplus.setting.elytra_trail_follower",
+            false,
+            true,
+            (b) -> ModuleManager.getModule(ElytraTrailFollower.class).setEnabled(b)),
+        SettingLocation.CHUNK_HIGHLIGHTS);
+    public final DoubleSetting elytraTrailFollowerSearchRadius = register(
+        DoubleSetting.create(
+            "Trail Follower Radius",
+            "xaeroplus.setting.elytra_trail_follower_radius",
+            1, 64, 1,
+            8,
+            () -> ModuleManager.getModule(ElytraTrailFollower.class).isEnabled()),
+        SettingLocation.CHUNK_HIGHLIGHTS);
+    public final DoubleSetting elytraTrailFollowerTickDelay = register(
+        DoubleSetting.create(
+            "Trail Follower Update Delay",
+            "xaeroplus.setting.elytra_trail_follower_delay",
+            1, 200, 1,
+            20,
+            () -> ModuleManager.getModule(ElytraTrailFollower.class).isEnabled()),
+        SettingLocation.CHUNK_HIGHLIGHTS);
     public final BooleanSetting worldToolsEnabledSetting = register(
         BooleanSetting.create(
             "WorldTools Highlights",
