@@ -1,38 +1,26 @@
-# XaeroPlus
+# XaeroPlus Chunk Follower
 
 <p align="center">
-  <a href="https://discord.gg/nJZrSaRKtb">
-  <img alt="Discord" src="https://dcbadge.vercel.app/api/server/nJZrSaRKtb">
-  </a>
+  <img src="https://github.com/user-attachments/assets/ee29b94e-5d57-4c55-96d4-6fb1b8375eaa" alt="Elytra Trail Follower Demonstration">
+</p>
+<p align="center">
+  (click play to check the module in action!)
 </p>
 
 <p align="center">
-  <a href=https://modrinth.com/mod/xaeroplus ><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/EnPUzSTg?style=for-the-badge&logo=modrinth&label=Modrinth&color=00AF5C"></a>
-  <a href=https://legacy.curseforge.com/minecraft/mc-mods/xaeroplus ><img alt="CurseForge Downloads" src="https://cf.way2muchnoise.eu/866084.svg?badge_style=for_the_badge"></a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/MC-1.12.2-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.19.2-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.19.4-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.20.1-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.20.2-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.20.4-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.20.6-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.1-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.3-brightgreen.svg" alt="Minecraft"/>
   <img src="https://img.shields.io/badge/MC-1.21.4-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.5-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.8-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.10-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/badge/MC-1.21.11-brightgreen.svg" alt="Minecraft"/>
-  <img src="https://img.shields.io/github/languages/code-size/rfresh2/XaeroPlus.svg" alt="Code size"/>
-  <img src="https://img.shields.io/github/repo-size/rfresh2/XaeroPlus.svg" alt="GitHub repo size"/>
-  <img src="https://tokei.rs/b1/github/rfresh2/XaeroPlus?category=code&style=flat" alt="Lines of Code"/>
 </p>
 
-XaeroPlus is a client-side Minecraft mod that depends on and modifies the Xaero's WorldMap and Minimap mods with extra
-features and performance improvements - particularly for use on anarchy servers like 2b2t.
+## Disclaimer
+
+* This module was created purely as a PoC, do not expect serious support or constant updates from this, if you know what you are doing, you could port this fork into any 1.21+ version that you wish
+* Currently, the 1.21.11 port is being kept as private since it has some extra features that are not supported on the public release.
+
+## Credits and Original Mod
+
+This module is built as an extension for [XaeroPlus by rfresh2](https://github.com/rfresh2/XaeroPlus), which enhances the original Xaero's Minimap/Worldmap mods.
+
+All foundational map-reading logic, chunk tracking and UI integration are built upon the excellent work of the original XaeroPlus team and contribuitors.
 
 XaeroPlus is not affiliated or endorsed by xaero96. Please report issues to XaeroPlus's [Github](https://github.com/rfresh2/XaeroPlus/issues) or [discord server](https://discord.gg/nJZrSaRKtb).
 
@@ -43,95 +31,45 @@ XaeroPlus is not affiliated or endorsed by xaero96. Please report issues to Xaer
 </p>
 </details>
 
-# Download
+## How it works
 
-Available on:
+* The `ElytraTrailFollower` acts as a some sort of "Copilot" or macro-navigator. While Baritone handles the micro-navigation (aka dodging blocks, managing fireworks and flying), this mod analyzes
+  the minimap on a large scale to decide **which chunk** Baritone should fly towards next, ensuring the physical route consist purely of visted chunks (OldChunks)
 
-* [Github Releases](https://github.com/rfresh2/XaeroPlus/releases)
-* [Modrinth](https://modrinth.com/mod/xaeroplus)
-* [CurseForge](https://legacy.curseforge.com/minecraft/mc-mods/xaeroplus)
-* [GitHub Actions](https://github.com/rfresh2/XaeroPlus/actions?query=branch%3Amainline+)
+## Core Features
 
-# Xaero Versions
+1. **OldChunk Recognition**: The mod seamlessly reads XaeroPlus's internal data to distinguish between OldChunks (older terrain) and NewChunks (ungenerated or newer terrain).
+2. **Safe Pathfinding**: Before issuing a command to Baritone, it scans the area, generating an unbroken chain of OldChunks towards your destination, preventing the Elytra from flying blindly into ungenerated territory.
+3. **Persistent Navigation**: If Baritone gets stuck on a block or finishes a short sub-path, the follower will persistently recalculate from that spot and restart Baritone until the final destination is reached.
+4. **Automatic Cancellation**: If the OldChunk trail completely ends or hits a true dead end with no available path, the mod immediately intervenes and aborts Baritone's ElytraFly process (`cancelEverything()`) to stop you mid-air before entering a dangerous NewChunk.
 
-Each XaeroPlus release is only compatible with a specific version of Xaero's WorldMap and Minimap (or [BetterPVP](https://chocolateminecraft.com/betterpvp2.php)).
+## Navigation Modes (Algorithms)
 
-Download and include these mods **in addition** to `XaeroPlus-*.jar` (3 jars total).
+The chunk scanning behavior can be altered via the `Elytra Follow Algorithm` setting in the Xaero options:
 
-You can find download links to Xaero's mods here:
-* https://modrinth.com/mod/xaeros-world-map/versions
-* https://modrinth.com/mod/xaeros-minimap/versions
+### 1. DIRECT
+- **How it works**: Locks onto the initial angle you clicked. It searches for the furthest continuous OldChunk within your radius, attempting to strictly adhere to a straight line along that original angle.
+- **Best use scenario**: Useful for predictable paths, straight highways, or linear travel. Because it is strict, if it encounters a complex fork or a lost trail, it will simply abort the flight for safety. No chunk can be visited twice.
 
-# Modifications
+### 2. TREMAUX
+- **How it works**: Implements the mathematical logic of the classic [Trémaux's algorithm](https://en.wikipedia.org/wiki/Maze-solving_algorithm#Trémaux's_algorithm) for solving mazes. The code tracks and memorizes in a `HashMap` exactly how many times you have stepped on the same chunk during this specific trip.
+- **Best use scenario**: Perfect for chaotic trails that end abruptly. Trémaux allows the bot to exceptionally turn around and retrace its steps (visiting the same chunk for a second time) to escape a dead-end tunnel and resume an alternative route. A chunk visited *twice* is permanently blocked as "dead".
 
-* [1.5-3x your FPS by limiting the framerate the minimap is rendered at!](https://youtu.be/hIG-VyGQLao)
-  * Tip: For least visual impact, lock the minimap's north
-* [Adjustable minimap scaling that increases how many chunks are visible](https://youtu.be/dNqxGzGAHyk)
-* [NewChunks Highlighting in MiniMap and WorldMap.](https://youtu.be/n-Tf6TJSsiA)
-* [Baritone](https://github.com/cabaletta/baritone) integration
-  * Baritone Goals synced as temporary waypoints
-  * [Point and Click Travel](https://youtu.be/gbguyfXLgi0)
-  * **Elytra Trail Follower**: Automatic pathing through loaded and unloaded chunks using Baritone's ElytraFly. Remembers your last direction if you look away or if the trail turns. Respects `#stop` to pause movement. Configure the search radius and update ticks in the `[XP] Other` settings menu.
-<p align="center">
-  <img src="elytra_menu.png" alt="Elytra Trail Follower Settings" width="600"/>
-</p>
+### 3. A-STAR (A*)
+- **How it works**: Modernizes the search by implementing sophisticated heuristic pathfinding handled by a Priority Queue (`PriorityQueue`). Starting from the player, it floods the geographical OldChunks evaluating two vital costs at every path node:
+  - `G-Cost` (Distance traveled): How many chunk hops it took from the player to reach that point.
+  - `H-Cost` (Heuristic): The mathematical straight-line distance separating that chunk from the **Final Clicked WayPoint**.
+- **Best use scenario**: The most recommended and intelligent mode. It will seamlessly navigate blind corners, tight "U" turns, or heavily zigzagging maps, always mathematically knowing which available OldChunk curve immovably brings you closer to your destination coordinates, rather than just gazing at the strict horizon.
 
-* [Waystones](https://legacy.curseforge.com/minecraft/mc-mods/waystones) and [Fabric Waystones](https://legacy.curseforge.com/minecraft/mc-mods/fabric-waystones) integration
-  * Syncs Waystones as temporary waypoints
-* [WorldTools](https://modrinth.com/mod/worldtools/) World Downloader integration
-  * [Highlights saved chunks while downloading](https://youtu.be/mtCqwJ_RGcc)
-* [Portals Highlighting in Minimap and WorldMap](https://youtu.be/zstGVfVRrAs)
-* [Portal Skip Highlighting in Minimap and WorldMap](https://youtu.be/g_yQ8D95RY0). Detects chunks where a portal could have been loaded.
-* OldChunks Highlighting in Minimap and WorldMap.
-  * Intended for use on 2b2t. Highlights chunks that were generated in 1.12.2 or lower in the Overworld and Nether based on the natural blocks present in the chunk.
-* [Transparent minimap background instead of wasted black screen space.](https://imgur.com/a/jGgHqL4)
-* [Fast map region writes](https://youtu.be/B5d7FaHXDCk). Prevent missed chunks in map while traveling at very high speeds.
-* Allow multiple MC instances to read/write to the same map concurrently
-* Transparent obsidian roof. Useful for mapping 2b2t spawn.
-* Setting to always view and create waypoints in the Overworld when in Nether.
-* [Render server view distance square around the player.](https://youtu.be/iY_JTGFK6Yg)
-* [Dimension hot-switching on WorldMap and Minimap.](https://youtu.be/hXZQtX2df3I)
-  * Recommended: Create keybinds for Minimap dimension switching.
-* WorldMap GUI:
-  * WorldMap zoom unlocked
-  * GUI on WorldMap to pan the map to user entered coordinates.
-  * WorldMap Follow mode and GUI button
-  * F1 on WorldMap hides GUI and overlays
-* Waypoints GUI:
-  * [Search](https://youtu.be/7DRMUsmZDxc)
-  * Display distance to waypoints on Waypoints GUI
-  * Always sort enabled waypoints before disabled waypoints
-  * GUI button to enable/disable all waypoints
-* [Waypoint Beacons](https://imgur.com/a/jGgHqL4)
-* Minecraft world always renders in background while in a Xaero GUI for client travel mods compatibility
-* Minimap entity dot fix. Hides the entity dot when arrow mode is selected.
-* WorldMap and Waypoint directories optionally indexed by:
-  * Multiplayer server list name.
-  * Base Server Domain Name
-  * Server IP (Xaero's default)
-  * **Changing this setting requires you to manually rename existing folders in `.minecraft/xaero/minimap` and `.minecraft/xaero/world-map`**
-* Overworld dimension optionally stored in the "DIM0" directory instead of "null"
-  * **Changing this setting requires you to manually rename existing folders in `.minecraft/xaero/world-map/Multiplayer_<server name>/`**
-* WorldMap 1.30.0 added cave data saving and rendering. There is a setting on by default in XaeroPlus that changes how the nether is rendered with cave mode off to be as it was previously.
-  * This removes the need to manually move existing world data files.
+## Elytra Smart Mode (Dynamic Adjustments)
 
-Configurations are in the Xaero WorldMap and Minimap settings GUI.
+An additional setting (`Elytra Smart Mode`) optimizes the follower's behavior based on real-world server events:
 
-Toggleable settings support keybinds through the standard Minecraft Controls GUI.
+- **Dynamic Latency Adjustment (TPS/Ping)**: If you suffer severe server lag spikes where your ping shoots above 80ms, the mod detects it directly from the Minecraft connection object and instantly increases your tick actuation wait time (up to doubling the `Tick Delay`). This relieves the server by mitigating packet spam and prevents abrupt disconnections from anti-cheats.
+- **Curve Prediction (Momentum)**: When flying at extremely high speeds with fireworks, it is very easy to overshoot tight curves and fly into NewChunks. The *Smart Mode* reads your current mass vector and horizontal velocity; if you exceed a critical speed threshold, it will multiply the **Chunk Search Radius (`x 1.5`)**. By pushing the radius out, the bot can project the path much further ahead than usual, issuing a sharp turn command to Baritone long before you overshoot the brakes.athTo(new BlockPos(...))` on the designed chunks without collapsing the current thread.
 
-# Language Translations
 
-PR's are welcomed for language translations. 
 
-Language files are located in `common/src/main/resources/assets/xaeroplus/lang/`
 
-Submit PR's targeting the `1.20.1` branch only. Changes will be merged to all the other MC versions by me.
 
-# Other Useful Tools
 
-* Convert JourneyMap World Files to Xaero: [JMToXaero](https://github.com/Entropy5/JMtoXaero)
-* Convert JourneyMap Waypoints to Xaero: [JMWaypointsToXaero](https://github.com/rfresh2/JMWaypointsToXaero)
-* 2b2t World Download Xaero Maps:
-  * 2025 100k^2 (6GB): https://data.mc-archive.org/s/6XJqdEtxkqwSGrs
-    * Cache (15GB): https://data.mc-archive.org/s/HSB3aEatWDFwG4Z 
-  * 2022 256k^2 (20GB): https://data.mc-archive.org/s/eFDEy2XKof83Kez
