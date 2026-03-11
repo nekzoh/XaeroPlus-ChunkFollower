@@ -332,5 +332,12 @@
   "xaeroplus.setting.elytra_trail_follower_radius": "Trail Follower Radius",
   "xaeroplus.setting.elytra_trail_follower_radius.tooltip": "The radius in chunks to search for loaded chunks to follow.",
   "xaeroplus.setting.elytra_trail_follower_delay": "Trail Follower Update Delay",
-  "xaeroplus.setting.elytra_trail_follower_delay.tooltip": "The delay in ticks between trail following updates."
+  "xaeroplus.setting.elytra_trail_follower_delay.tooltip": "The delay in ticks between trail following updates.",
+  "xaeroplus.setting.elytra_trail_follower_algorithm": "Elytra Follow Algorithm",
+  "xaeroplus.setting.elytra_trail_follower_algorithm.tooltip": "DIRECT: Strict forward tracking. Stops at dead ends. \n TREMAUX: Navigates complex trails and turns back at dead ends. \n A_STAR: Intelligent pathfinding prioritizing the clicked destination.",
+  "xaeroplus.setting.elytra_trail_follower_algorithm.direct": "DIRECT",
+  "xaeroplus.setting.elytra_trail_follower_algorithm.tremaux": "TREMAUX",
+  "xaeroplus.setting.elytra_trail_follower_algorithm.a_star": "A-STAR",
+  "xaeroplus.setting.elytra_trail_follower_smart_mode": "Elytra Smart Mode",
+  "xaeroplus.setting.elytra_trail_follower_smart_mode.tooltip": "Dynamically adjusts update delay based on server ping, and expands search radius if you are flying very fast."
 }

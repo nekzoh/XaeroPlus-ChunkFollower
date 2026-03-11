@@ -45,6 +45,12 @@ public final class BaritoneExecutor {
         BaritoneAPI.getSettings().elytraTermsAccepted.value = true;
         var goal = getBaritoneGoalXZ(x, z);
         BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoal(goal);
-        BaritoneAPI.getProvider().getPrimaryBaritone().getElytraProcess().pathTo(goal);
+        
+        var elytraFollower = xaeroplus.module.ModuleManager.getModule(xaeroplus.module.impl.ElytraTrailFollower.class);
+        if (elytraFollower.isEnabled()) {
+            elytraFollower.setUserGoal(x, z);
+        } else {
+            BaritoneAPI.getProvider().getPrimaryBaritone().getElytraProcess().pathTo(goal);
+        }
     }
 }

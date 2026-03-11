@@ -627,6 +627,27 @@ public final class Settings extends SettingRegistry {
             true,
             (b) -> ModuleManager.getModule(ElytraTrailFollower.class).setEnabled(b)),
         SettingLocation.CHUNK_HIGHLIGHTS);
+    public enum ElytraTrailFollowerAlgorithm implements TranslatableSettingEnum {
+        DIRECT("xaeroplus.setting.elytra_trail_follower_algorithm.direct"),
+        TREMAUX("xaeroplus.setting.elytra_trail_follower_algorithm.tremaux"),
+        A_STAR("xaeroplus.setting.elytra_trail_follower_algorithm.a_star");
+        private final String translationKey;
+        ElytraTrailFollowerAlgorithm(final String translationKey) {
+            this.translationKey = translationKey;
+        }
+        @Override
+        public String getTranslationKey() {
+            return translationKey;
+        }
+    }
+    public final EnumSetting<ElytraTrailFollowerAlgorithm> elytraTrailFollowerAlgorithmSetting = register(
+        EnumSetting.create(
+            "Elytra Follow Algorithm",
+            "xaeroplus.setting.elytra_trail_follower_algorithm",
+            ElytraTrailFollowerAlgorithm.values(),
+            ElytraTrailFollowerAlgorithm.DIRECT,
+            (b) -> {}),
+        SettingLocation.CHUNK_HIGHLIGHTS);
     public final DoubleSetting elytraTrailFollowerSearchRadius = register(
         DoubleSetting.create(
             "Trail Follower Radius",
@@ -642,6 +663,14 @@ public final class Settings extends SettingRegistry {
             1, 200, 1,
             20,
             () -> ModuleManager.getModule(ElytraTrailFollower.class).isEnabled()),
+        SettingLocation.CHUNK_HIGHLIGHTS);
+    public final BooleanSetting elytraTrailFollowerSmartMode = register(
+        BooleanSetting.create(
+            "Elytra Smart Mode",
+            "xaeroplus.setting.elytra_trail_follower_smart_mode",
+            false,
+            true,
+            (b) -> {}),
         SettingLocation.CHUNK_HIGHLIGHTS);
     public final BooleanSetting worldToolsEnabledSetting = register(
         BooleanSetting.create(
